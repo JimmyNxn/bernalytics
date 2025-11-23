@@ -109,16 +109,24 @@ Or connect your GitHub repo to Netlify for auto-deploys.
 
 ### Option 3: GitHub Pages
 
-Add to `vite.config.js`:
-```js
-base: '/bernalytics/'
-```
+**Setup (one-time):**
 
-Build and deploy:
-```bash
-npm run build
-# Deploy dist/ folder to gh-pages branch
-```
+1. Enable GitHub Pages:
+   - Go to Settings → Pages
+   - Source: **GitHub Actions**
+   - Save
+
+2. Add Environment Secrets (REQUIRED):
+   - Go to Settings → Environments → **github-pages**
+   - Add secret: `VITE_SUPABASE_URL` (your Supabase project URL)
+   - Add secret: `VITE_SUPABASE_ANON_KEY` (your Supabase anon key)
+   - **Important:** Must be added to the **github-pages environment**, not repository secrets!
+
+3. Deploy:
+   - Push to main branch or manually trigger from Actions tab
+   - Your site will be live at: `https://your-username.github.io/bernalytics/`
+
+The `vite.config.js` is already configured with `base: '/bernalytics/'`
 
 ## Customization Ideas
 

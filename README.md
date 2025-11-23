@@ -380,8 +380,13 @@ See [DEPLOY_GITHUB_PAGES.md](DEPLOY_GITHUB_PAGES.md) for complete deployment ins
 
 **Quick deploy:**
 1. Enable GitHub Pages: Settings → Pages → Source: GitHub Actions
-2. Add secrets: `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
+2. Add Environment Secrets to the **github-pages** environment:
+   - Go to Settings → Environments → github-pages
+   - Add secret: `VITE_SUPABASE_URL` (value from your `.env` file)
+   - Add secret: `VITE_SUPABASE_ANON_KEY` (value from your `.env` file)
 3. Push to main branch - auto-deploys!
 
 Your dashboard will be live at: `https://your-username.github.io/bernalytics/`
+
+**Note:** The secrets must be added to the **github-pages environment**, not just repository secrets, for the deployment to work correctly.
 
