@@ -1,74 +1,134 @@
 export default function StatsCards({ data }) {
   if (!data || data.length === 0) {
-    return null
+    return null;
   }
 
   // Get the most recent week's data
-  const latestData = data[0]
+  const latestData = data[0];
 
   // Calculate week-over-week change if we have previous data
-  const previousData = data[1]
+  const previousData = data[1];
   const calculateChange = (current, previous) => {
-    if (!previous) return null
-    const change = current - previous
-    const percentChange = ((change / previous) * 100).toFixed(1)
-    return { change, percentChange }
-  }
+    if (!previous) return null;
+    const change = current - previous;
+    const percentChange = ((change / previous) * 100).toFixed(1);
+    return { change, percentChange };
+  };
 
   const stats = [
     {
-      title: 'Total Data Engineer',
+      title: "TOTAL_DATA_ENGINEER",
+      label: "All DE Positions",
       value: latestData.data_engineer,
-      change: previousData ? calculateChange(latestData.data_engineer, previousData.data_engineer) : null,
-      color: 'blue',
+      change: previousData
+        ? calculateChange(latestData.data_engineer, previousData.data_engineer)
+        : null,
+      color: "blue",
+      borderColor: "border-blue-500",
+      textColor: "text-blue-400",
+      bgColor: "bg-blue-900",
     },
     {
-      title: 'Junior Positions',
+      title: "JUNIOR_POSITIONS",
+      label: "Entry Level",
       value: latestData.junior_data_engineer,
-      change: previousData ? calculateChange(latestData.junior_data_engineer, previousData.junior_data_engineer) : null,
-      color: 'green',
+      change: previousData
+        ? calculateChange(
+            latestData.junior_data_engineer,
+            previousData.junior_data_engineer,
+          )
+        : null,
+      color: "green",
+      borderColor: "border-green-500",
+      textColor: "text-green-400",
+      bgColor: "bg-green-900",
     },
     {
-      title: 'Senior Positions',
+      title: "SENIOR_POSITIONS",
+      label: "Experienced",
       value: latestData.senior_data_engineer,
-      change: previousData ? calculateChange(latestData.senior_data_engineer, previousData.senior_data_engineer) : null,
-      color: 'amber',
+      change: previousData
+        ? calculateChange(
+            latestData.senior_data_engineer,
+            previousData.senior_data_engineer,
+          )
+        : null,
+      color: "yellow",
+      borderColor: "border-yellow-500",
+      textColor: "text-yellow-400",
+      bgColor: "bg-yellow-900",
     },
-  ]
-
-  const colorClasses = {
-    blue: 'bg-blue-100 text-blue-800',
-    green: 'bg-green-100 text-green-800',
-    amber: 'bg-amber-100 text-amber-800',
-  }
+  ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       {stats.map((stat, index) => (
-        <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
-          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-            {stat.title}
-          </h3>
-          <div className="mt-2 flex items-baseline">
-            <p className="text-4xl font-bold text-gray-900">{stat.value}</p>
-            {stat.change && (
-              <span
-                className={`ml-2 text-sm font-medium ${
-                  stat.change.change >= 0 ? 'text-green-600' : 'text-red-600'
-                }`}
+        <div
+          key={index}
+          className={`bg-gray-800 border-2 ${stat.borderColor} p-1 shadow-lg hover:shadow-xl transition-shadow`}
+        >
+          <div className="bg-gray-900 p-6">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3
+                  className={`text-xs font-bold ${stat.textColor} uppercase tracking-wider font-mono mb-1`}
+                >
+                  [ {stat.title} ]
+                </h3>
+                <p className="text-gray-500 text-xs font-mono">{stat.label}</p>
+              </div>
+              <div
+                className={`w-3 h-3 ${stat.bgColor} border-2 ${stat.borderColor} animate-pulse`}
+              />
+            </div>
+
+            <div className="mb-4">
+              <p
+                className={`text-5xl font-bold ${stat.textColor} font-mono tracking-wider`}
               >
-                {stat.change.change >= 0 ? '+' : ''}
-                {stat.change.change} ({stat.change.percentChange}%)
-              </span>
+                {stat.value}
+              </p>
+              <p className="text-gray-600 text-xs font-mono mt-1">
+                ACTIVE_JOBS
+              </p>
+            </div>
+
+            {stat.change && (
+              <div
+                className={`border-t-2 ${stat.borderColor} pt-4 font-mono text-sm`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-500 text-xs">WoW CHANGE:</span>
+                  <span
+                    className={`font-bold ${
+                      stat.change.change >= 0
+                        ? "text-green-400"
+                        : "text-red-400"
+                    }`}
+                  >
+                    {stat.change.change >= 0 ? "▲ +" : "▼ "}
+                    {stat.change.change} ({stat.change.percentChange}%)
+                  </span>
+                </div>
+              </div>
             )}
-          </div>
-          <div className="mt-4">
-            <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${colorClasses[stat.color]}`}>
-              Week of {new Date(latestData.week_starting).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-            </span>
+
+            <div className="mt-4 pt-4 border-t border-gray-700">
+              <p className="text-gray-600 text-xs font-mono">
+                WEEK_OF:{" "}
+                {new Date(latestData.week_starting).toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  },
+                )}
+              </p>
+            </div>
           </div>
         </div>
       ))}
     </div>
-  )
+  );
 }

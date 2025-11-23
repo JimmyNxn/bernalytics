@@ -2,45 +2,253 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #f9fafb;
+    color-scheme: dark;
+    color: #10b981;
+    background-color: #111827;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* 8-bit cursor */
+    cursor:
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><rect width="16" height="16" fill="%2310b981"/></svg>')
+            8 8,
+        auto;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: #111827;
+    background-image:
+        linear-gradient(
+            0deg,
+            transparent 24%,
+            rgba(16, 185, 129, 0.05) 25%,
+            rgba(16, 185, 129, 0.05) 26%,
+            transparent 27%,
+            transparent 74%,
+            rgba(16, 185, 129, 0.05) 75%,
+            rgba(16, 185, 129, 0.05) 76%,
+            transparent 77%,
+            transparent
+        ),
+        linear-gradient(
+            90deg,
+            transparent 24%,
+            rgba(16, 185, 129, 0.05) 25%,
+            rgba(16, 185, 129, 0.05) 26%,
+            transparent 27%,
+            transparent 74%,
+            rgba(16, 185, 129, 0.05) 75%,
+            rgba(16, 185, 129, 0.05) 76%,
+            transparent 77%,
+            transparent
+        );
+    background-size: 50px 50px;
 }
 
 #root {
-  width: 100%;
-  margin: 0 auto;
+    width: 100%;
+    margin: 0 auto;
 }
 
-@layer utilities {
-  .animate-spin {
-    animation: spin 1s linear infinite;
-  }
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
 
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
+::-webkit-scrollbar-track {
+    background: #1f2937;
+    border: 2px solid #10b981;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #10b981;
+    border: 2px solid #1f2937;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #34d399;
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #10b981 #1f2937;
+}
+
+/* Selection styling */
+::selection {
+    background-color: #10b981;
+    color: #000000;
+}
+
+::-moz-selection {
+    background-color: #10b981;
+    color: #000000;
+}
+
+/* Button focus states */
+button:focus,
+a:focus {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+}
+
+/* Custom utilities */
+@layer utilities {
+    .animate-spin {
+        animation: spin 1s linear infinite;
     }
-    to {
-      transform: rotate(360deg);
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
     }
-  }
+
+    /* Pixel-perfect borders */
+    .pixel-border {
+        border-style: solid;
+        border-width: 2px;
+        image-rendering: pixelated;
+    }
+
+    /* Retro glow effect */
+    .retro-glow {
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Screen flicker effect */
+    @keyframes flicker {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.97;
+        }
+    }
+
+    .screen-flicker {
+        animation: flicker 0.15s infinite;
+    }
+
+    /* Scanline effect */
+    .scanlines {
+        position: relative;
+    }
+
+    .scanlines::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            to bottom,
+            transparent 50%,
+            rgba(0, 0, 0, 0.05) 50%
+        );
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* Pixelated image rendering */
+    img {
+        image-rendering: pixelated;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Table styling for retro look */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Recharts custom styling */
+.recharts-wrapper {
+    font-family: "JetBrains Mono", monospace !important;
+}
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+    stroke: #374151;
+    stroke-dasharray: 3 3;
+}
+
+.recharts-text {
+    font-family: "JetBrains Mono", monospace !important;
+    font-size: 12px !important;
+}
+
+/* Loading animation enhancement */
+@keyframes pulse-glow {
+    0%,
+    100% {
+        box-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
+    }
+}
+
+.animate-pulse {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hover effects for interactive elements */
+button,
+a {
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover,
+a:hover {
+    filter: brightness(1.2);
+}
+
+button:active,
+a:active {
+    filter: brightness(0.8);
+}
+
+/* Retro card style */
+.retro-card {
+    background: #1f2937;
+    border: 2px solid #10b981;
+    box-shadow: 4px 4px 0 #10b981;
+    transition:
+        transform 0.1s,
+        box-shadow 0.1s;
+}
+
+.retro-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 #10b981;
 }
