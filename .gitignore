@@ -157,3 +157,12 @@ logs/
 secrets/
 *.key
 *.pem
+
+# Debug and test files
+debug_*.py
+debug_*.json
+test_*.py
+test_*.json
+verify_*.py
+verify_*.json
+*_debug_output.json

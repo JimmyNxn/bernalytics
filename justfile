@@ -13,6 +13,10 @@ setup:
 run:
     uv run python -m bernalytics.main
 
+# Run with database: Collect, display, and save to Supabase
+run-db:
+    uv run python -m bernalytics.main --write-to-db
+
 # Test: Run all tests
 test:
     pytest

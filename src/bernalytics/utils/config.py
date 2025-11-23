@@ -50,6 +50,10 @@ class Config(BaseSettings):
     # Database (Optional - for future use)
     database_url: Optional[str] = Field(default=None, validation_alias="DATABASE_URL")
 
+    # Supabase Configuration
+    supabase_url: Optional[str] = Field(default=None, validation_alias="SUPABASE_URL")
+    supabase_key: Optional[str] = Field(default=None, validation_alias="SUPABASE_KEY")
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
@@ -102,6 +106,8 @@ class Config(BaseSettings):
             "max_pages": self.max_pages,
             "request_delay_seconds": self.request_delay_seconds,
             "database_url": "***" if self.database_url else None,  # Mask DB URL
+            "supabase_url": "***" if self.supabase_url else None,  # Mask Supabase URL
+            "supabase_key": "***" if self.supabase_key else None,  # Mask Supabase key
         }
 
 

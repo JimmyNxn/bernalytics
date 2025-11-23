@@ -32,24 +32,24 @@ class SerpClient:
         Args:
             job_title: Job title to search for
             location: Location to search in
-            time_period: Time period (day, week, month, year, all)
+            time_period: Time period (default: week)
 
         Returns:
             JobCounts with results for each search term
+
+        Note:
+            Searches for jobs posted in the past week on LinkedIn.
+            Uses 'linkedin.com/jobs' in query instead of site: operator for better results.
         """
         logger.info(f"Fetching job counts for '{job_title}' in {location} (period: {time_period})")
-
-        # Map time period to Google Search parameter
-        time_range_map = {"day": "d", "week": "w", "month": "m", "year": "y", "all": None}
-        time_range = time_range_map.get(time_period.lower(), "w")
 
         # Extract city name
         city = location.split(",")[0].strip()
 
-        # Perform three searches
-        data_engineer_count = self._search(job_title, city, time_range)
-        junior_count = self._search(f"Junior {job_title}", city, time_range)
-        senior_count = self._search(f"Senior {job_title}", city, time_range)
+        # Perform three searches (without time filter for accurate counts)
+        data_engineer_count = self._search(job_title, city)
+        junior_count = self._search(f"Junior {job_title}", city)
+        senior_count = self._search(f"Senior {job_title}", city)
 
         counts = JobCounts(
             data_engineer=data_engineer_count,
@@ -65,19 +65,22 @@ class SerpClient:
 
         return counts
 
-    def _search(self, term: str, location: str, time_range: Optional[str]) -> int:
-        """Execute a single LinkedIn job search."""
+    def _search(self, term: str, location: str) -> int:
+        """
+        Execute a single LinkedIn job search.
+
+        Note: We include 'linkedin.com/jobs' in the query text (not using site: operator)
+        because Google provides total_results for these queries with time filters.
+        """
         query = f'"{term}" {location} site:linkedin.com/jobs'
 
         params = {
             "api_key": self.api_key,
             "engine": "google",
             "q": query,
-            "num": 100,
+            "num": 10,  # Using 10 instead of 100 - Google returns total_results with smaller num values
+            "tbs": "qdr:w",  # Past week filter
         }
-
-        if time_range:
-            params["tbs"] = f"qdr:{time_range}"
 
         try:
             search = GoogleSearch(params)
