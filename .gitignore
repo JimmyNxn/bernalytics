@@ -166,3 +166,9 @@ test_*.json
 verify_*.py
 verify_*.json
 *_debug_output.json
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local

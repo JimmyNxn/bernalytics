@@ -360,3 +360,28 @@ Ideas for extending this project:
 ---
 
 **Made with ❤️ for the Berlin tech community**
+## Frontend Dashboard
+
+A React dashboard is included for visualizing your job data:
+
+### Quick Start
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Dashboard opens at `http://localhost:3000`
+
+### Deploy to GitHub Pages
+
+See [DEPLOY_GITHUB_PAGES.md](DEPLOY_GITHUB_PAGES.md) for complete deployment instructions.
+
+**Quick deploy:**
+1. Enable GitHub Pages: Settings → Pages → Source: GitHub Actions
+2. Add secrets: `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
+3. Push to main branch - auto-deploys!
+
+Your dashboard will be live at: `https://your-username.github.io/bernalytics/`
+
