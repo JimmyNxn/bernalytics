@@ -7,10 +7,7 @@ Fetches LinkedIn job posting counts and displays results.
 import argparse
 import os
 from datetime import datetime, timedelta
-from typing import Optional
-
-from loguru import logger
-
+import logging
 from bernalytics.api.serp_client import SerpClient
 from bernalytics.database import DatabaseClient
 from bernalytics.utils.config import get_config
@@ -35,8 +32,7 @@ def main(write_to_db: bool = False) -> None:
     config = get_config()
 
     # Setup simple logging
-    logger.remove()
-    logger.add(lambda msg: print(msg, end=""), level="INFO", format="{message}")
+    logging.basicConfig(level=logging.INFO)
 
     try:
         # Initialize SERP client
