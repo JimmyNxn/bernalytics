@@ -33,6 +33,7 @@ def main(write_to_db: bool = False) -> None:
 
     # Setup simple logging
     logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
 
     try:
         # Initialize SERP client
